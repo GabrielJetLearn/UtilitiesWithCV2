@@ -48,3 +48,47 @@ cv2.imshow("Rotate 270°", rotate_270)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 
+# Create a blank black image (500x500 pixels, 3 color channels)
+blank_img = np.zeros((500, 500, 3), dtype=np.uint8)
+
+# Display the blank image
+cv2.imshow("Blank Black Image", blank_img)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+# -------- Draw Polygon --------
+polygon_img = blank_img.copy()
+points = np.array([
+    [100, 200],
+    [200, 100],
+    [300, 200],
+    [250, 300],
+    [150, 300]
+], np.int32)
+
+# Reshape points for OpenCV format
+points = points.reshape((-1, 1, 2))
+
+# Draw polygon
+cv2.polylines(polygon_img, [points], isClosed=True, color=(0, 255, 0), thickness=2)
+cv2.imshow("Polygon", polygon_img)
+
+# -------- Mouse Click Event --------
+def click_event(event, x, y, flags, param):
+    if event == cv2.EVENT_LBUTTONDOWN:
+        print(f"Clicked coordinates: ({x}, {y})")
+
+cv2.namedWindow("Mouse Click Demo")
+cv2.setMouseCallback("Mouse Click Demo", click_event)
+
+# Show window to capture clicks
+cv2.imshow("Mouse Click Demo", blank_img.copy())
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+blended_img = cv2.addWeighted("SMC.jpg", 0.5, "SMC2.png", 0.5, 0)
+cv2.imshow("Blended Image", blended_img)
+
+
